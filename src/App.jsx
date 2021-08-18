@@ -21,16 +21,23 @@ const ToDoList = () => {
     "Finish homework"
   ]);
 
-  const addTodo = (todo) => setTodoList([todo]);
+  const addTodo = (todo) => {
+    setTodoList([...todoList, inputValue]);
+    setInputValue("");
+  };
 
-  const removeTodo = () => {};
+  const removeTodo = (idx) => {
+    let updatedTodoList = [...todoList];
+    updatedTodoList.splice(idx, 1);
+    setTodoList(updatedTodoList);
+  };
 
   return (
     <div className="todo-list">
-      {todoList.map((todo) => (
+      {todoList.map((todo, idx) => (
         <div className="todo">
           {todo}
-          <button onClick={removeTodo}>x</button>
+          <button onClick={() => removeTodo(idx)}>x</button>
         </div>
       ))}
       <div>
@@ -40,7 +47,7 @@ const ToDoList = () => {
           placeholder="Make a new todo!"
           onChange={(e) => setInputValue(e.target.value)}
         />
-        <button>+</button>
+        <button onClick={addTodo}>+</button>
       </div>
     </div>
   );
